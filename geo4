@@ -1,0 +1,244 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}  % For better table formatting
+\usepackage{graphicx}  % For including images
+\usepackage{float}     % For precise figure positioning
+\usepackage{placeins}
+
+
+\begin{document}
+
+\title{CW - Design of a Cut-off Barrier for Long-Term Containment}
+\author{Ismail Mohammad \\ Student ID: 10772433}
+\date{}
+\maketitle
+
+\section*{Part A}
+
+\textbf{Scenario:} An approximation of one-dimensional modeling of contaminant transport in this case is assumed to be acceptable. Using an appropriate analytical solution [Eqs. 1 to 3 in Appendix A], predict the time for the contaminant plume (Cl⁻) to reach the river. For the properties of soil, refer to Table 1 of Appendix B. It is also assumed that the soil is homogeneous and the concentration of contaminant at the source is constant.
+
+\vspace{0.5cm}
+\textbf{1.} \textbf{Initial Condition:}  
+  \[
+   C(x,0) = 0, \quad \text{for } x > 0 \quad \
+  \]
+ \hspace{0.8cm}  \textbf{Boundary Conditions:}  
+  \[
+  C(0,t) = 3500 \text{ mg/L}, \quad C(\infty,t) = 0 \text{ mg/L}
+  \]
+  
+\vspace{0.5cm}
+\textbf{2.} To determine the appropriate governing equation, we first calculate the \textbf{diffusion coefficient} ($D_H$):
+
+\[
+D_H = D^* + \alpha v_s
+\]
+
+where:
+\[
+\alpha = 100 \text{ cm}, \quad v_s = 0.005 \text{ cm/s}, \quad D^* = 4.7 \times 10^{-6} \text{ cm}^2/\text{s}
+\]
+Thus,
+\[
+D_H = 0.5 \text{ cm}^2/\text{s}
+\]
+
+The \textbf{Péclet number} ($P_L$) is also determined by,
+
+\[
+P_L = \frac{v_s x}{D_H}
+\]
+
+where:
+\[
+v_s = 0.005 \text{ cm/s}, \quad x = 20000 \text{ cm}, \quad D_H = 0.5 \text{ cm}^2/\text{s}
+\]
+Thus,
+\[
+P_L = 200
+\]
+
+\vspace{0.5cm}
+\textbf{3.} Since \( 1 < P_L < 1000 \), the solution follows the governing equation:
+
+\[
+C(x,t) = \frac{C_0}{2} \left[ \operatorname{erfc} \left( \frac{R_d x - v_s t}{2 \sqrt{R_d D_H t}} \right) 
++ e^{\frac{v_s x}{D_H}} \operatorname{erfc} \left( \frac{R_d x + v_s t}{2 \sqrt{R_d D_H t}} \right) \right]
+\]
+
+
+This equation will be computed with the values below.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{l c c c}
+        \toprule
+        \textbf{Parameter} & \textbf{Symbol} & \textbf{Value} & \textbf{Units} \\
+        \midrule
+        Initial concentration & \( C_0 \) & 3500 & mg/L \\
+        River concentration limit & \( C(x,t) \) & 250 & mg/L \\
+        Distance to river & \( x \) & 20000 & cm \\
+        Seepage velocity & \( v_s \) & 0.005 & cm/s \\
+        Diffusion coefficient & \( D_H \) & 0.5 & cm$^2$/s \\
+        Retardation factor & \( R_d \) & 1.0 & - \\
+        \bottomrule
+    \end{tabular}
+    \caption{Parameters used in the calculation}
+\end{table}
+
+\vspace{0.5cm}
+\textbf{4.} The final results are shown in the table below. A subset of the calculated values is shown for clarity:
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{c c c c c}
+        \toprule
+        \textbf{Time (days)} & \textbf{Time (secs)} & \textbf{ERFC (minus)} & \textbf{ERFC (plus)} & \textbf{Concentration (mg/L)} \\
+        \midrule
+        39   & 3369600  & 1.214177096  & 14.19416169  & 166.3164608  \\
+        39.1 & 3378240  & 1.196003734  & 14.19261868  & 175.4290113  \\
+        39.2 & 3386880  & 1.177878745  & 14.19110279  & 184.9094172  \\
+        39.3 & 3395520  & 1.159801848  & 14.18961382  & 194.7650186  \\
+        39.4 & 3404160  & 1.141772765  & 14.18815157  & 205.0029229  \\
+        39.5 & 3412800  & 1.123791219  & 14.18671585  & 215.6299856  \\
+        39.6 & 3421440  & 1.105856937  & 14.18530647  & 226.6527912  \\
+        39.7 & 3430080  & 1.087969648  & 14.18392322  & 238.0776341  \\
+        39.8 & 3438720  & 1.070129082  & 14.18256593  & 249.9105     \\
+        39.9 & 3447360  & 1.052334972  & 14.18123439  & 262.1570474  \\
+        40   & 3456000  & 1.034587053  & 14.17992843  & 274.8225898  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Subset of calculated concentration values}
+    \label{tab:concentration_values}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{image.png}
+    \caption{Graph of Cl concentration over time}
+    \label{fig:enter-label}
+\end{figure}
+\FloatBarrier  % Prevents figures from floating past this point
+
+
+
+According to the results, it takes around 41 days for the chloride plume to reach the river. To reduce groundwater pollution and safeguard the drinking water supply, a containment strategy—such as a cut-off wall—must be put in place whenever the concentration exceeds the permissible threshold.
+
+\section*{Part B}
+\textbf{Scenario:} According to drinking water standards, the chloride concentration in the river should not exceed 250 mg/L. Therefore, geoenvironmental engineers are tasked with designing a vertical cut-off wall as a containment solution to prevent the contaminant from reaching the river for the next 40 years.
+Estimate the required thickness of the cut-off wall if clay materials are to be used. The iterative procedure outlined in Appendix C should be followed to develop the solution.
+
+\vspace{0.5cm}
+\textbf{1.} To determine an appropriate linear thickness, the \textbf{dimensionless travel time} (\( T_R \)) is obtained from the reference chart, using the calculated \textbf{Péclet number} (\( P_L \)) and \textbf{concentration ratio} \( C/C_0 \). 
+
+\vspace{0.5cm}
+Calculating \( C/C_0 \),
+\[
+\frac{C}{C_0} = \frac{250}{3500} = 0.0714
+\]
+
+Calculating \( P_L \) assuming length to be 1m,
+\[
+P_L = \frac{(V_{s-CCL} \cdot L)}{D^*} = \frac{(1.8 \times 10^{-10} \times 1)}{4.7 \times 10^{-10}} = 0.38298
+\]
+
+\vspace{0.5cm}
+\textbf{2.} The \( T_R \) value is obtained from the reference chart:
+
+\begin{figure}[H]  % Correct syntax for fixed positioning
+    \centering
+    \includegraphics[width=0.5\linewidth]{image.png}
+    \caption{Reference chart for \( T_R \) values}
+    \label{fig:enter-label}
+\end{figure}
+\FloatBarrier  % Ensures figures stay in place
+
+In this case, \( T_R \) = 0.045
+
+\vspace{0.5cm}
+\textbf{3.} The \textbf{travel time} (\( t \)) is then computed:
+
+\[
+t = \frac{T_R R_d L}{V_s - CCL}
+\]
+
+This process is iterated until \( t \) exceeds 40 years.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{c c c c c c c}
+        \toprule
+        \textbf{Iteration} & \textbf{Length (m)} & \( P_L \) & \( C/C_0 \) & \( T_R \) & \textbf{Time (seconds)} & \textbf{Time (years)} \\
+        \midrule
+        1 & 1   & 0.3829787  & 0.071428571  & 0.045  & 250000000  & 7.927448  \\
+        2 & 2   & 0.7659574  & 0.071428571  & 0.075  & 833333333.3  & 26.424827  \\
+        3 & 3   & 1.14893617 & 0.071428571  & 0.12   & 2000000000  & 63.419584  \\
+        4 & 2.5 & 0.9574468  & 0.071428571  & 0.1    & 1388888889  & 44.041378  \\
+        5 & 2.3 & 0.8808511  & 0.071428571  & 0.099  & 1265000000  & 40.112887  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Iterative calculations for linear thickness}
+    \label{tab:liner_thickness}
+\end{table}
+
+
+
+The results demonstrate that a linear thickness of 2.3m is determined to be sufficient for restricting chloride migration for at least 40 years. The slight offset  from 40 years provides a reasonable safety margin, accounting for potential uncertainties in ground composition and fluid flow behaviour while not avoiding excessive overdesign.
+
+\section*{Part C}
+\textbf{Scenario:} 
+Assume the same barrier thickness designed for Scenario B, but with chloride replaced by reactive contaminants listed in Table 1 (i.e., \( K^+ \), \( Zn^{2+} \), or \( Cd^{2+} \)).
+Calculate the distribution of each contaminant within the clay barrier along the direction of flow after 40 years. Based on the results, provide a brief explanation of the effect of the retardation factor on the design criteria of barrier systems.
+
+\vspace{0.5cm}
+\textbf{1.} Calculate the concentration of the contaminants at thicknesses 0.2-2.3m with the equation,
+
+\[
+C(x,t) = C_0 \operatorname{erfc} \left( \frac{R_d x}{2 \sqrt{R_d D^* t}} \right)
+\]
+where \( C_0 = 500 \) mg/L, \( R_d = 1.0 \), \( D^* = 2 \times 10^{-9} \) cm\(^2\)/s, and \( t = 1.26 \times 10^{-9} \) seconds (40 years).
+
+\vspace{0.5cm}
+For instance, initial thickness for \( Zn^{2+} \) is 0.2m.
+
+\vspace{0.5cm}
+Thus, 
+\[
+C(x_t) = 322.7 mg/L
+\]
+
+\vspace{0.5cm}
+\textbf{2.} The table of results for concentrations of \( K^+ \), \( Zn^{2+} \), or \( Cd^{2+} \) across barrier thicknesses is given below. A subset of the calculated results is shown for clarity.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{c c c c}
+        \toprule
+        \textbf{Horizontal Distance (m)} & \( K^+ \) (mg/L) & \( Zn^{2+} \) (mg/L) & \( Cd^{2+} \) (mg/L) \\
+        \midrule
+        0.2  & 322.73359  & 0.0655711   & 1.90E-05   \\
+        0.4  & 178.750678 & 8.17E-08    & 1.66E-18   \\
+        0.6  & 83.7617724 & 2.27E-17    & 5.73E-40   \\
+        0.8  & 32.8640623 & 1.23E-30    & 6.77E-70   \\
+        1.0  & 10.7144369 & 1.26E-47    & 2.60E-108  \\
+        1.2  & 2.88644365 & 2.34E-68    & 3.18E-155  \\
+        1.4  & 0.6398845  & 7.90E-93    & 1.22E-210  \\
+        1.6  & 0.11636727 & 4.78E-121   & 1.46E-274  \\
+        1.8  & 0.0173188  & 5.17E-153   & 0          \\
+        2.0  & 0.00210554 & 9.95E-189   & 0          \\
+        2.2  & 0.0002088  & 3.40E-228   & 0          \\
+        2.3  & 6.09E-05   & 2.47E-249   & 0          \\
+        \bottomrule
+    \end{tabular}
+    \caption{Contaminant concentration across barrier thickness}
+    \label{tab:contaminant_distribution}
+\end{table}
+
+The findings indicate that variations in retardation factors significantly influence contaminant retention within the barrier system. Potassium (\( K^+ \)) exhibits the highest mobility, with residual traces detected at 2.3 m, indicating minimal retention. In contrast, cadmium (\( Cd^{2+} \)) demonstrates a high retardation factor, remaining largely confined within 0.2 m, while zinc (\( Zn^{2+} \)) undergoes moderate retention, becoming undetectable beyond 0.6 m.
+These results confirm that the cut-off wall effectively restricts \( Zn^{2+} \) and \( Cd^{2+} \) migration, whereas \( K^+ \) may necessitate further mitigation strategies to limit its long-term transport. This highlights the importance of optimizing barrier configurations based on contaminant mobility to enhance groundwater protection and containment efficiency.
+
+
+\end{document}
